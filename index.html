@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Un simulador de dados interactivo para explorar conceptos de probabilidad y estadística como la ley de los grandes números. Tira los dados y observa los resultados en tiempo real.">
+    <title>Simulador de Dados | Probabilidad y Estadística</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Usamos una versión más reciente y estable de Font Awesome vía CSS -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body id="top">
+    <header>
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <i class="fas fa-dice-six me-2" aria-hidden="true"></i>DiceAnalytics
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#simulator-section">Simulador</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#simulator-section">Estadísticas</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="container">
+                <h1 class="hero-title">Simulador de Probabilidad de Dados</h1>
+                <p class="hero-subtitle">Visualiza la ley de los grandes números en acción con nuestro simulador interactivo</p>
+            </div>
+        </section>
+
+        <!-- Sección de Conceptos Teóricos -->
+        <section id="concepts-section" class="container mt-5 pt-4" role="region" aria-labelledby="concepts-heading">
+            <div class="text-center mb-4">
+                <h2 id="concepts-heading" class="h3">Conceptos Clave de Probabilidad</h2>
+                <p class="text-muted">Entiende la teoría detrás de la simulación.</p>
+            </div>
+            <div class="row g-4 justify-content-center">
+                <div class="col-md-6 col-lg-4">
+                    <div class="concept-card">
+                        <div class="concept-icon"><i class="fas fa-vial" aria-hidden="true"></i></div>
+                        <h3 class="h5">Experimento Aleatorio</h3>
+                        <p>Es una acción cuyo resultado no se puede predecir con certeza, como <strong>lanzar el dado</strong>. Aunque conocemos los resultados posibles, no sabemos cuál saldrá.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="concept-card">
+                        <div class="concept-icon"><i class="fas fa-cubes" aria-hidden="true"></i></div>
+                        <h3 class="h5">Espacio Muestral</h3>
+                        <p>Son todos los resultados posibles. Para un dado, es {1, 2, 3, 4, 5, 6}. Cada resultado es un <strong>suceso equiprobable</strong>, con la misma probabilidad de ocurrir (1/6).</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="concept-card">
+                        <div class="concept-icon"><i class="fas fa-bullseye" aria-hidden="true"></i></div>
+                        <h3 class="h5">Suceso o Evento</h3>
+                        <p>Es uno o más resultados posibles. "Obtener un 5" es un suceso simple. "Obtener un número par" ({2, 4, 6}) es un suceso compuesto.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="concept-card">
+                        <div class="concept-icon"><i class="fas fa-divide" aria-hidden="true"></i></div>
+                        <h3 class="h5">Probabilidad Teórica</h3>
+                        <p>Se usa la <strong>Regla de Laplace</strong>: `Casos Favorables / Casos Posibles`. La probabilidad de sacar un 3 es 1/6, o 16.67%.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="concept-card">
+                        <div class="concept-icon"><i class="fas fa-calculator" aria-hidden="true"></i></div>
+                        <h3 class="h5">Frecuencia Experimental</h3>
+                        <p>Es el resultado de tus tiradas. La <strong>frecuencia relativa</strong> es `(Veces que salió / Total de Tiradas)`. Es la probabilidad en la práctica.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="concept-card">
+                        <div class="concept-icon"><i class="fas fa-infinity" aria-hidden="true"></i></div>
+                        <h3 class="h5">Ley de los Grandes Números</h3>
+                        <p>A medida que aumentas las tiradas, la <strong>frecuencia experimental</strong> se acerca cada vez más a la <strong>probabilidad teórica</strong>. ¡Compruébalo!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="simulator-section" class="container mt-5 pt-4" role="region" aria-labelledby="simulator-heading">
+            <div class="text-center mb-5">
+                <h2 id="simulator-heading" class="h3">Simulador Interactivo</h2>
+                <p class="text-muted">Ahora, pon a prueba la teoría.</p>
+            </div>
+            <div class="row g-4">
+                <!-- Columna izquierda: Dado y controles -->
+                <div class="col-lg-5">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="h5 mb-0"><i class="fas fa-dice me-2" aria-hidden="true"></i>Simulación en Tiempo Real</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="text-center mb-4">
+                                <div class="dice-container" aria-label="Dado 3D animado">
+                                    <div id="dice" class="dice dice-rgb-mode"></div>
+                                </div>
+
+                                <div class="result-display">
+                                    <p class="last-result-label small mb-1">Último resultado:</p>
+                                    <p id="lastResult" class="last-result fw-bold fs-4 mb-0">—</p>
+                                </div>
+                            </div>
+
+                            <div class="controls-grid">
+                                <button id="rollBtn" class="btn btn-primary d-flex align-items-center justify-content-center gap-2 py-3">
+                                    <i class="fas fa-dice" aria-hidden="true"></i> Tirar 1 vez
+                                </button>
+                                
+                                <div class="control-group">
+                                    <label for="nRolls" class="form-label small text-muted mb-1">Número de tiradas</label>
+                                    <div class="input-group">
+                                        <input id="nRolls" type="number" min="1" step="1" value="100" class="form-control text-center" aria-describedby="helpTextNrolls" />
+                                        <button id="autoRollBtn" class="btn btn-success d-flex align-items-center gap-2">
+                                            <i class="fas fa-sync-alt" aria-hidden="true"></i> Simular
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <button id="resetBtn" class="btn btn-outline-secondary d-flex align-items-center justify-content-center gap-2 py-3">
+                                    <i class="fas fa-redo-alt" aria-hidden="true"></i> Reiniciar
+                                </button>
+                            </div>
+                            
+                            <div class="mt-3">
+                                <small id="helpTextNrolls" class="form-text text-muted">
+                                    <i class="fas fa-lightbulb me-1" aria-hidden="true"></i> Simula múltiples tiradas para observar cómo se estabilizan las frecuencias
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Columna derecha: Estadísticas y gráficos -->
+                <div class="col-lg-7">
+                    <!-- Tarjeta de gráfico -->
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h3 class="h5 mb-0"><i class="fas fa-chart-bar me-2" aria-hidden="true"></i>Distribución de Resultados</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-container">
+                                <canvas id="frequencyChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tarjeta de estadísticas -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="h5 mb-0"><i class="fas fa-table me-2" aria-hidden="true"></i>Estadísticas Detalladas</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="table-responsive">
+                                        <table id="freqTable" class="table table-striped align-middle caption-top mb-0">
+                                            <caption class="visually-hidden">Resultados detallados de las tiradas del dado.</caption>
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col" class="ps-3" style="width: 20%;">Cara</th>
+                                                    <th scope="col" style="width: 40%;">Frecuencia</th>
+                                                    <th scope="col" class="text-center" style="width: 20%;">Abs.</th>
+                                                    <th scope="col" class="text-center" style="width: 20%;">Rel.</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- Las filas se generarán dinámicamente -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul class="stats-grid list-unstyled mb-0">
+                                        <li class="stat-card">
+                                            <div class="stat-icon text-primary mb-2">
+                                                <i class="fas fa-chart-pie fa-2x" aria-hidden="true"></i>
+                                            </div>
+                                            <div class="stat-label">Total de tiradas</div>
+                                            <strong id="total" class="stat-value">0</strong>
+                                        </li>
+                                        <li class="stat-card">
+                                            <div class="stat-icon text-success mb-2">
+                                                <i class="fas fa-star fa-2x" aria-hidden="true"></i>
+                                            </div>
+                                            <div class="stat-label">Moda (más frecuente)</div>
+                                            <strong id="mode" class="stat-value">—</strong>
+                                        </li>
+                                        <li class="stat-card">
+                                            <div class="stat-icon text-warning mb-2">
+                                                <i class="fas fa-balance-scale-right fa-2x" aria-hidden="true"></i>
+                                            </div>
+                                            <div class="stat-label">Media (Promedio)</div>
+                                            <strong id="mean" class="stat-value">—</strong>
+                                        </li>
+                                        <li class="stat-card">
+                                            <div class="stat-icon text-danger mb-2">
+                                                <i class="fas fa-stream fa-2x" aria-hidden="true"></i>
+                                            </div>
+                                            <div class="stat-label">Mediana</div>
+                                            <strong id="median" class="stat-value">—</strong>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer id="footer" class="footer mt-5 py-4">
+        <div class="container text-center">
+            <p class="mb-1">Hecho por Tiago Maidana para fines educativos y didácticos . © 2025 - DiceAnalytics</p>
+            <small><a href="#top" class="text-white-50 text-decoration-none">Volver arriba <i class="fas fa-arrow-up ms-1"></i></a></small>
+        </div>
+    </footer>
+
+    <!-- Contenedor para notificaciones toast -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Template para las caras del dado (Principio DRY) -->
+    <template id="dice-faces-template">
+        <div class="face face-1"><span class="dot"></span></div>
+        <div class="face face-2">
+            <span class="dot"></span><span class="dot"></span>
+        </div>
+        <div class="face face-3">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        </div>
+        <div class="face face-4">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        </div>
+        <div class="face face-5">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        </div>
+        <div class="face face-6">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        </div>
+    </template>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

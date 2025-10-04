@@ -1,0 +1,925 @@
+/* Agregar estas reglas al archivo style.css */
+
+/* Sistema de notificaciones Toast */
+.toast-container {
+  position: fixed;
+  top: 1.5rem; /* 24px */
+  right: 1.5rem; /* 24px */
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.75rem; /* Espacio entre notificaciones */
+  pointer-events: none; /* El contenedor no intercepta clics */
+}
+
+.toast-message {
+  background: var(--color-bg-secondary);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
+  border-radius: 0.75rem;
+  padding: 1rem 1.25rem;
+  box-shadow: var(--shadow-large);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  transform: translateX(100%);
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  min-width: 320px;
+  max-width: 350px;
+  pointer-events: auto; /* Pero los mensajes sí */
+}
+
+.toast-message.show {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.toast-message.hide {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+.toast-message.success {
+  border-left: 4px solid var(--color-success);
+}
+
+.toast-message.error {
+  border-left: 4px solid #e74c3c;
+}
+
+.toast-message.info {
+  border-left: 4px solid var(--color-accent);
+}
+
+/* Animación de entrada */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes grow-line {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Animaciones para la tabla */
+.table tbody tr {
+  opacity: 0;
+  animation: fadeInRow 0.5s forwards;
+}
+
+@keyframes fadeInRow {
+  to {
+    opacity: 1;
+  }
+}
+
+.table tbody tr:nth-child(1) { animation-delay: 0.05s; }
+.table tbody tr:nth-child(2) { animation-delay: 0.1s; }
+.table tbody tr:nth-child(3) { animation-delay: 0.15s; }
+.table tbody tr:nth-child(4) { animation-delay: 0.2s; }
+.table tbody tr:nth-child(5) { animation-delay: 0.25s; }
+.table tbody tr:nth-child(6) { animation-delay: 0.3s; }
+
+/* Animación del dado */
+@keyframes dice-roll-3d {
+  0% { 
+    transform: rotateX(0) rotateY(0) rotateZ(0) scale(1); 
+    box-shadow: 0 0 10px var(--color-accent-glow);
+  }
+  25% { 
+    transform: rotateX(180deg) rotateY(90deg) rotateZ(45deg) scale(1.2); 
+    box-shadow: 0 0 20px var(--color-accent-glow);
+  }
+  50% { 
+    transform: rotateX(360deg) rotateY(180deg) rotateZ(90deg) scale(1.1); 
+    box-shadow: 0 0 30px var(--color-accent-glow);
+  }
+  75% { 
+    transform: rotateX(540deg) rotateY(270deg) rotateZ(135deg) scale(1.2); 
+    box-shadow: 0 0 20px var(--color-accent-glow);
+  }
+  100% { 
+    transform: rotateX(720deg) rotateY(360deg) rotateZ(180deg) scale(1); 
+    box-shadow: 0 0 10px var(--color-accent-glow);
+  }
+}
+
+/* Animación de feedback para la fila de la última tirada */
+@keyframes row-highlight-flash {
+  0%, 100% {
+    background-color: transparent;
+  }
+  20%, 60% {
+    background-color: var(--color-accent-glow);
+  }
+}
+
+/* Animación de pulso para botones */
+@keyframes pulse-glow {
+  0% {
+    box-shadow: 0 0 8px var(--color-accent-glow);
+  }
+  50% {
+    box-shadow: 0 0 20px var(--color-accent-glow), 0 0 10px var(--color-accent);
+  }
+  100% {
+    box-shadow: 0 0 8px var(--color-accent-glow);
+  }
+}
+
+/* Animación de rotación lenta para iconos */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Animación de fondo sutil */
+@keyframes move-background {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Animación flotante para iconos */
+@keyframes float {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* Animación de gradiente para texto */
+@keyframes text-gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Variables CSS mejoradas para un control más fácil del tema */
+:root {
+  --font-family-primary: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  /* Nueva paleta de colores - Tema Claro */
+  --color-accent: #007bff; /* Azul primario vibrante */
+  --color-accent-dark: #0056b3;
+  --color-accent-light: #66b0ff;
+  --color-accent-glow: rgba(0, 123, 255, 0.2);
+  --color-bg-primary: #ffffff; /* Fondo blanco */
+  --color-bg-secondary: #f8f9fa; /* Gris muy claro para tarjetas */
+  --color-bg-tertiary: #e9ecef; /* Gris un poco más oscuro */
+  --color-text-primary: #212529; /* Texto principal oscuro */
+  --color-text-muted: #6c757d; /* Texto secundario gris */
+  --color-text-bright: #000000; /* Texto de alto contraste */
+  --color-border: #dee2e6;
+  --color-input-bg: #ffffff;
+  --color-input-border: #ced4da;
+  --color-error: #dc3545; /* Rojo de Bootstrap para errores */
+  --color-success: #28a745; /* Verde para éxito */
+  --transition-base: all 0.3s ease;
+  --transition-smooth: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+  --shadow-soft: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-medium: 0 6px 12px rgba(0, 0, 0, 0.15);
+  --shadow-large: 0 12px 24px rgba(0, 0, 0, 0.2);
+  --shadow-accent: 0 0 20px var(--color-accent-glow);
+  --dice-size: clamp(60px, 12vw, 90px);
+}
+
+/* Temas de color para el dado */
+.dice-theme-red {
+  --color-accent: #f56565;
+  --color-accent-dark: #c53030;
+  --color-accent-glow: rgba(245, 101, 101, 0.3);
+}
+
+.dice-theme-green {
+  --color-accent: #48bb78;
+  --color-accent-dark: #2f855a;
+  --color-accent-glow: rgba(72, 187, 120, 0.3);
+}
+
+.dice-theme-blue {
+  --color-accent: #4299e1;
+  --color-accent-dark: #2b6cb0;
+  --color-accent-glow: rgba(66, 153, 225, 0.3);
+}
+
+.dice-theme-purple {
+  --color-accent: #9f7aea;
+  --color-accent-dark: #6b46c1;
+  --color-accent-glow: rgba(159, 122, 234, 0.3);
+}
+
+.dice-theme-yellow {
+  --color-accent: #ecc94b;
+  --color-accent-dark: #b7791f;
+  --color-accent-glow: rgba(236, 201, 75, 0.3);
+}
+
+.dice-theme-pink {
+  --color-accent: #ed64a6;
+  --color-accent-dark: #b83280;
+  --color-accent-glow: rgba(237, 100, 166, 0.3);
+}
+
+/* Animación de ciclo de color RGB estilo "Gamer" */
+@keyframes gamer-rgb-cycle {
+  0%   { --rgb-color: #ff0048; } /* Rojo-Rosa */
+  16%  { --rgb-color: #ff7f00; } /* Naranja */
+  33%  { --rgb-color: #bfff00; } /* Lima */
+  50%  { --rgb-color: #00ff8c; } /* Verde Menta */
+  66%  { --rgb-color: #00bfff; } /* Azul Cielo */
+  83%  { --rgb-color: #c300ff; } /* Púrpura */
+  100% { --rgb-color: #ff0048; } /* De vuelta a Rojo-Rosa */
+}
+
+.dice-rgb-mode {
+  /* La animación define la variable --rgb-color que se usará en los hijos */
+  animation: gamer-rgb-cycle 8s linear infinite;
+}
+.dice-rgb-mode .face {
+  border-color: var(--rgb-color);
+}
+.dice-rgb-mode .dot {
+  background-color: var(--rgb-color);
+}
+
+/* Estilos base mejorados */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  /*
+    Creamos un gradiente largo con los colores deseados (y repetimos el primero al final para un bucle perfecto).
+    La animación moverá este gradiente para crear un efecto de cambio de color suave.
+  */
+  background: linear-gradient(135deg,
+    var(--color-bg-primary)
+  );
+  color: var(--color-text-primary);
+  font-family: var(--font-family-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+/* Estado de carga para simulaciones largas */
+body.is-simulating {
+  cursor: wait;
+}
+
+/* Override de Bootstrap para texto 'muted' en tema oscuro */
+.text-muted {
+  color: var(--color-text-muted) !important;
+}
+
+/* Hero Section mejorada */
+.hero-section {
+  padding: 4rem 1rem;
+  text-align: center;
+  background: var(--color-bg-primary);
+  border-bottom: 1px solid var(--color-border);
+  overflow: hidden;
+}
+
+/* Navbar mejorada */
+.navbar {
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px); /* Soporte para Safari */
+  border-bottom: 1px solid var(--color-border);
+  transition: background-color 0.3s ease;
+}
+
+.navbar-brand {
+  font-weight: 700;
+  font-size: 1.5rem;
+  letter-spacing: -0.5px;
+  display: flex;
+  align-items: center;
+  color: var(--color-text-primary) !important;
+  gap: 0.5rem;
+  transition: color 0.3s ease;
+}
+
+.navbar-brand:hover {
+  color: var(--color-accent-light);
+}
+
+.navbar-brand i {
+  animation: spin-slow 30s linear infinite;
+  transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Mantenemos la transición para el hover */
+}
+
+.navbar-brand:hover i {
+  transform: rotate(25deg) scale(1.2); /* El hover sobreescribe la animación de rotación */
+  color: var(--color-accent);
+}
+
+.nav-link {
+  position: relative;
+  color: var(--color-text-muted) !important;
+  padding-bottom: 4px;
+  transition: color 0.3s ease;
+}
+.nav-link:hover {
+  color: var(--color-accent-light) !important;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--color-accent);
+  transform: scaleX(0);
+  transition: transform .3s ease-in-out;
+}
+.nav-link:hover::after, .nav-link.active::after {
+  transform: scaleX(1);
+}
+
+/* Mejoras de contenedores y tarjetas */
+.card {
+  background: var(--color-bg-secondary);
+  border-radius: 1.25rem; /* 20px */
+  border: 1.5px solid var(--color-border);
+  box-shadow: var(--shadow-medium);
+  transition: var(--transition-base);
+  opacity: 0;
+  animation: fadeInUp 0.6s ease-out forwards;
+  overflow: hidden;
+  position: relative;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0,0,0,0.1), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card:hover::before {
+  opacity: 1;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-large), var(--shadow-accent);
+}
+
+.card-header .h5 {
+  display: inline-block; /* Asegura que la transformación se aplique correctamente al bloque de texto */
+  animation: float 6s ease-in-out infinite;
+  color: var(--color-text-primary);
+}
+
+.card-header .h5 > i {
+  color: var(--color-accent);
+}
+
+/* Desincronizar animación de los títulos del simulador */
+#simulator-section .col-lg-5 .card .card-header .h5 { animation-delay: 0s; }
+#simulator-section .col-lg-7 .card:nth-of-type(1) .card-header .h5 { animation-delay: -2s; }
+#simulator-section .col-lg-7 .card:nth-of-type(2) .card-header .h5 { animation-delay: -4s; }
+
+.stat-card {
+  background: var(--color-bg-primary);
+  padding: 1.25rem;
+  border-radius: 0.75rem; /* 12px */
+  border: 1px solid var(--color-border);
+  text-align: center;
+  box-shadow: var(--shadow-soft);
+  transition: var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--color-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.stat-card:hover::after {
+  transform: scaleX(1);
+}
+
+.stat-card:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: var(--shadow-medium);
+}
+
+/* Animación de revelado para el título */
+@keyframes reveal-text-bg {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+@keyframes reveal-text-content {
+  from {
+    opacity: 0;
+  }
+}
+/* Tipografía mejorada */
+.hero-title {
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  font-size: clamp(1.8rem, 5vw, 2.5rem);
+  margin-bottom: 1.5rem !important;
+  background: linear-gradient(135deg, var(--color-text-bright) 0%, var(--color-accent-light) 50%, var(--color-text-bright) 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+  display: inline-block;
+  /* La animación de revelado se aplica al contenido a través del pseudo-elemento */
+  animation: reveal-text-content 0.01s 1s forwards, 
+             text-gradient-animation 5s ease-in-out infinite 1.5s;
+}
+
+.hero-title::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--color-accent);
+  transform: scaleX(0);
+  transform-origin: center;
+  /* La línea ahora aparece después de que el título se revela */
+  animation: reveal-text-bg 0.6s 1.2s cubic-bezier(0.86, 0, 0.07, 1) forwards;
+}
+
+.hero-subtitle {
+  opacity: 0;
+  animation: fadeInUp 0.8s ease-out 1s forwards;
+}
+
+/* Controles del juego mejorados */
+.controls-grid .btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem; /* 12px */
+  font-weight: 600;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: var(--transition-base);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  border: none;
+  cursor: pointer;
+}
+
+.controls-grid #rollBtn,
+.controls-grid #autoRollBtn {
+  animation: pulse-glow 4s infinite ease-in-out;
+}
+
+.controls-grid .btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, transparent 0%, rgba(255, 255, 255, 0.1) 100%);
+  z-index: -1;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+
+.controls-grid .btn:hover::before {
+  transform: translateY(0);
+}
+
+.btn-success {
+  background-color: var(--color-accent) !important;
+  border-color: var(--color-accent) !important;
+}
+
+.btn-success:hover {
+  background-color: var(--color-accent-dark) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 170, 255, 0.3);
+  box-shadow: 0 6px 15px var(--color-accent-glow);
+}
+
+.btn-primary {
+  background-color: var(--color-accent-dark) !important;
+  border-color: var(--color-accent-dark) !important;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-accent) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 170, 255, 0.3);
+  box-shadow: 0 6px 15px var(--color-accent-glow);
+}
+
+.btn-outline-secondary {
+  background-color: var(--color-bg-tertiary) !important;
+  color: var(--color-text-muted) !important;
+  border: 1px solid var(--color-border) !important;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #3c4a5f !important; /* Tono intermedio para consistencia */
+  color: var(--color-text-bright) !important;
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: scale(0.98) translateY(0);
+}
+
+.form-control {
+  background-color: var(--color-input-bg);
+  border: 1.5px solid var(--color-input-border);
+  color: var(--color-text-primary);
+  transition: var(--transition-base);
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+}
+
+.form-control:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px var(--color-accent-glow);
+  outline: none;
+}
+
+.form-control:hover:not(:focus) {
+  border-color: var(--color-accent-dark);
+}
+
+/* Estilo para el input cuando está deshabilitado, para que coincida con el tema oscuro */
+.form-control:disabled {
+  background-color: var(--color-bg-tertiary) !important; /* Fondo gris claro */
+  opacity: 0.6; /* Un poco transparente para indicar que está inactivo */
+  cursor: not-allowed;
+}
+
+/* Dado y animación mejorados */
+.dice-container {
+  perspective: 1000px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: calc(var(--dice-size) + 20px);
+  animation: float 8s ease-in-out infinite;
+}
+
+.dice {
+  width: var(--dice-size);
+  height: var(--dice-size);
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+.face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  align-items: center;
+  padding: 12px;
+  gap: 6px;
+  border-radius: 1rem;
+  border: 2px solid var(--color-accent);
+  background: linear-gradient(135deg, var(--color-bg-secondary) 0%, var(--color-bg-tertiary) 100%);
+  color: var(--color-accent);
+  box-shadow: var(--shadow-soft), inset 0 0 15px rgba(0, 0, 0, 0.2);
+  font-weight: bold;
+  user-select: none;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+/* Posicionamiento de las caras para formar el cubo */
+.face-1 { transform: translateZ(calc(var(--dice-size) / 2)); }
+.face-6 { transform: rotateY(180deg) translateZ(calc(var(--dice-size) / 2)); }
+.face-2 { transform: rotateY(-90deg) translateZ(calc(var(--dice-size) / 2)); }
+.face-5 { transform: rotateY(90deg) translateZ(calc(var(--dice-size) / 2)); }
+.face-3 { transform: rotateX(90deg) translateZ(calc(var(--dice-size) / 2)); }
+.face-4 { transform: rotateX(-90deg) translateZ(calc(var(--dice-size) / 2)); }
+
+/* Durante la tirada, el fondo de la cara se oscurece un poco para dar feedback, pero el borde RGB se mantiene */
+.dice.is-rolling .face {
+  background: linear-gradient(135deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.2) 100%);
+}
+
+/* Estilos para los puntos del dado */
+.dot {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: var(--color-accent);
+  transition: background-color 0.3s ease;
+  box-shadow: inset 0 0 3px rgba(0,0,0,0.3);
+}
+
+/* Posicionamiento de los puntos para cada cara usando CSS Grid */
+.face-1 .dot:nth-child(1) { grid-area: 2 / 2; }
+
+.face-2 .dot:nth-child(1) { grid-area: 1 / 1; }
+.face-2 .dot:nth-child(2) { grid-area: 3 / 3; }
+
+.face-3 .dot:nth-child(1) { grid-area: 1 / 1; }
+.face-3 .dot:nth-child(2) { grid-area: 2 / 2; }
+.face-3 .dot:nth-child(3) { grid-area: 3 / 3; }
+
+.face-4 .dot:nth-child(1) { grid-area: 1 / 1; }
+.face-4 .dot:nth-child(2) { grid-area: 1 / 3; }
+.face-4 .dot:nth-child(3) { grid-area: 3 / 1; }
+.face-4 .dot:nth-child(4) { grid-area: 3 / 3; }
+
+.face-5 .dot:nth-child(1) { grid-area: 1 / 1; }
+.face-5 .dot:nth-child(2) { grid-area: 1 / 3; }
+.face-5 .dot:nth-child(3) { grid-area: 2 / 2; }
+.face-5 .dot:nth-child(4) { grid-area: 3 / 1; }
+.face-5 .dot:nth-child(5) { grid-area: 3 / 3; }
+
+.face-6 .dot:nth-child(1) { grid-area: 1 / 1; }
+.face-6 .dot:nth-child(2) { grid-area: 1 / 3; }
+.face-6 .dot:nth-child(3) { grid-area: 2 / 1; }
+.face-6 .dot:nth-child(4) { grid-area: 2 / 3; }
+.face-6 .dot:nth-child(5) { grid-area: 3 / 1; }
+.face-6 .dot:nth-child(6) { grid-area: 3 / 3; }
+
+/* Contenedor del gráfico */
+.chart-container {
+  position: relative;
+  height: 280px;
+}
+
+/* Tabla de frecuencias mejorada */
+.table-responsive {
+  border-radius: 0.75rem;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-soft);
+}
+
+.table {
+  margin-bottom: 0;
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+}
+
+.table th {
+  background: linear-gradient(to bottom, var(--color-bg-primary) 0%, var(--color-bg-secondary) 100%);
+  color: var(--color-accent-light);
+  font-weight: 700;
+  border-color: var(--color-border);
+  padding: 1rem;
+  text-align: center;
+  position: sticky;
+  top: 0;
+}
+
+.table td {
+  border-color: var(--color-border);
+  padding: 0.75rem 1rem;
+  text-align: center;
+  transition: background-color 0.2s ease;
+}
+
+.table tbody tr:nth-child(odd) {
+  background-color: var(--color-bg-secondary);
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: var(--color-bg-tertiary);
+}
+
+.table .table-success,
+.table .table-success:hover td {
+    background-color: rgba(0, 123, 255, 0.1); /* Usando el color de acento con transparencia */
+    color: var(--color-text-bright);
+}
+
+.table tbody tr:hover td {
+  background-color: var(--color-bg-primary);
+}
+
+.is-last-roll td {
+  /* Usamos !important para sobreescribir el color de fondo de la fila (odd/even) durante la animación */
+  animation: row-highlight-flash 1.2s ease-out !important;
+}
+
+/* Estilo para el número de la cara en la tabla */
+.face-number {
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--color-text-muted);
+  transition: transform 0.3s ease;
+}
+
+/* Animación para los títulos de sección */
+#concepts-section .text-center > .h3,
+#concepts-section .text-center > p,
+#simulator-section .text-center > .h3,
+#simulator-section .text-center > p {
+    opacity: 0;
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+#concepts-section .text-center > .h3,
+#simulator-section .text-center > .h3 {
+    animation-delay: 0.2s;
+}
+
+#concepts-section .text-center > p,
+#simulator-section .text-center > p {
+    animation-delay: 0.3s;
+}
+
+/* Estilos para la sección de conceptos */
+.concept-card {
+  background: var(--color-bg-secondary);
+  padding: 1.75rem;
+  border-radius: 1rem;
+  border-color: var(--color-border);
+  border: 1px solid var(--color-border);
+  text-align: center;
+  height: 100%;
+  transition: var(--transition-base);
+  opacity: 0;
+  animation: fadeInUp 0.6s ease-out forwards;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.concept-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-medium);
+  border-color: var(--color-accent);
+}
+
+.concept-icon {
+  font-size: 2.25rem;
+  color: var(--color-accent);
+  margin-bottom: 1rem;
+  line-height: 1;
+  animation: float 5s ease-in-out infinite;
+}
+
+.concept-icon > i {
+  display: inline-block; /* Permite que la transformación se aplique correctamente */
+  transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.concept-card .h5 {
+  color: var(--color-text-primary);
+  margin-bottom: 0.75rem;
+}
+
+.concept-card:hover .concept-icon > i {
+  transform: scale(1.15) rotate(8deg);
+}
+
+.concept-card p {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* Animaciones de entrada escalonadas */
+.row.g-4.justify-content-center > .col-md-6:nth-child(1) .concept-card { animation-delay: 0.1s; }
+.row.g-4.justify-content-center > .col-md-6:nth-child(2) .concept-card { animation-delay: 0.2s; }
+.row.g-4.justify-content-center > .col-md-6:nth-child(3) .concept-card { animation-delay: 0.3s; }
+.row.g-4.justify-content-center > .col-md-6:nth-child(4) .concept-card { animation-delay: 0.4s; }
+.row.g-4.justify-content-center > .col-md-6:nth-child(5) .concept-card { animation-delay: 0.5s; }
+.row.g-4.justify-content-center > .col-md-6:nth-child(6) .concept-card { animation-delay: 0.6s; }
+
+/* Animaciones de entrada para el simulador */
+#simulator-section .col-lg-5 .card { animation-delay: 0.7s; }
+#simulator-section .col-lg-7 .card:nth-of-type(1) { animation-delay: 0.8s; }
+#simulator-section .col-lg-7 .card:nth-of-type(2) { animation-delay: 0.9s; }
+
+/* Media Queries mejoradas para diseño responsivo */
+@media (max-width: 768px) {
+  .controls-grid > .control-group {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.5rem;
+  }
+  
+  .controls-grid > .control-group .form-control {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+  
+  .controls-grid .btn {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+  
+  .row.align-items-center {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .card {
+    border-radius: 1rem;
+  }
+  
+  .stat-card {
+    padding: 1rem;
+  }
+  
+  .dice {
+    width: 70px;
+    height: 70px;
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    font-size: 14px;
+  }
+  
+  .card {
+    border-radius: 0.75rem;
+  }
+  
+  .dice {
+    width: 60px;
+    height: 60px;
+    font-size: 2rem;
+  }
+  
+  .table th, .table td {
+    padding: 0.5rem;
+  }
+}
+
+/* Modo de alto contraste para accesibilidad */
+@media (prefers-contrast: high) {
+  :root {
+    --color-bg-primary: #000000;
+    --color-bg-secondary: #0a0a0a;
+    --color-text-primary: #ffffff;
+    --color-border: #555555;
+  }
+  
+  .card {
+    border-width: 2px;
+  }
+}
+
+/* Reducción de movimiento para accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+}
